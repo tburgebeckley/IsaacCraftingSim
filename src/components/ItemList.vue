@@ -1,7 +1,7 @@
 <template lang="html">
 
   <section class="item-list">
-    <div v-for="item in itemsList" :key="item.id">
+    <div v-for="item in items" :key="item.id">
         <item-description v-bind="item" />
     </div>
   </section>
@@ -20,62 +20,9 @@ export default defineComponent({
   props: {
     items: Array
   },
-  data () {
-    return {}
-  },
   methods: {
-    convertItemToJson (item: Element) {
-      let jsonItem = {
-        id: 1,
-        name: "defaultName",
-        description: "defaultDescription"
-      }
-      if (item.hasAttributes()) {
-        const attributeNames = item.getAttributeNames()
-        if ('id' in attributeNames) {
-          jsonItem.id = Number(item.getAttribute('id'))
-        }
-        if ('name' in attributeNames) {
-          jsonItem.name = String(item.getAttribute('name'))
-        }
-        if ('description' in attributeNames) {
-          jsonItem.description = String(item.getAttribute('description'))
-        }
-      }
-      return jsonItem
-    }
-
   },
   computed: {
-    itemsList: function () {
-      return [
-        {
-          id: 1,
-          name: "Cricket's Body",
-          description: "Tears up + splash Damage"
-        },
-        {
-          id: 1,
-          name: "Cricket's Body",
-          description: "Tears up + splash Damage"
-        },
-        {
-          id: 1,
-          name: "Cricket's Body",
-          description: "Tears up + splash Damage"
-        },
-        {
-          id: 1,
-          name: "Cricket's Body",
-          description: "Tears up + splash Damage"
-        },
-        {
-          id: 1,
-          name: "Cricket's Body",
-          description: "Tears up + splash Damage"
-        },
-      ]
-    }
   }
 });
 </script>

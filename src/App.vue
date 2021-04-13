@@ -20,7 +20,7 @@ export default defineComponent({
   data() {
     return {
       craftingBag: [] as number[],
-      items: [] as Element[]
+      items: Array<{id: number, name: string, description: string}>()
     }
   },
 
@@ -39,11 +39,29 @@ export default defineComponent({
       this.craftingBag = [];
     },
 
+    elementToJsonItem(element: Element) {
+      const itemObject = {
+        id: 1,
+        name: "defaultName",
+        description: "defaultDescription"
+      }
+      if (element.hasAttribute('id')) {
+        itemObject.id = Number(element.getAttribute('id'))
+      }
+      if (element.hasAttribute('name')) {
+        itemObject.name = String(element.getAttribute('name'))
+      }
+      if (element.hasAttribute('description')) {
+        itemObject.description = String(element.getAttribute('description'))
+      }
+      return itemObject
+    },
+
     async fetchItems() {
       const data = await d3.xml("/items.xml")
       const itemArray = []
       for (const n of data.documentElement.querySelectorAll("passive,active,familiar,trinket")) {
-        itemArray.push(n)
+        itemArray.push(this.elementToJsonItem(n))
       }
       return itemArray
     }
